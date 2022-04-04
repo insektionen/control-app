@@ -11,8 +11,13 @@ interface Props {
 export default function CollectionListItem({ label, onClick, color, menu }: Props) {
   return (
     <Card>
-      <Group noWrap spacing={"lg"}>
-        <Button variant="default" fullWidth color={color} onClick={() => (onClick !== undefined ? onClick() : '')}>
+      <Group noWrap spacing={'lg'}>
+        <Button
+          variant="default"
+          fullWidth
+          color={color}
+          onClick={() => (onClick !== undefined ? onClick() : '')}
+        >
           {label}
         </Button>
         <Menu

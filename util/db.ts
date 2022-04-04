@@ -11,17 +11,17 @@ let cached = global.mongodb; // Handle cached connection
 if (!cached) cached = global.mongodb = { conn: null, promise: null }; // If nothing is cached create object
 
 export async function connectToCollection(): Promise<CollectionConnection> {
-	const collection = 'piles';
+  const collection = 'piles';
 
-	if (cached.conn) return cached.conn; // return the cached connection
+  if (cached.conn) return cached.conn; // return the cached connection
 
-	if (!cached.promise) {
-		// create the connection promise
-		cached.promise = MongoClient.connect(URL).then((client) => ({
-			client,
-			collection: client.db(DATABASE).collection(collection),
-		}));
-	}
-	cached.conn = await cached.promise; // wait for promise to resolve
-	return cached.conn; // return client and collection
+  if (!cached.promise) {
+    // create the connection promise
+    cached.promise = MongoClient.connect(URL).then((client) => ({
+      client,
+      collection: client.db(DATABASE).collection(collection),
+    }));
+  }
+  cached.conn = await cached.promise; // wait for promise to resolve
+  return cached.conn; // return client and collection
 }

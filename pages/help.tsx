@@ -10,10 +10,9 @@ export default function HelpPage() {
           <Text color="dimmed" size="sm">
             Create a collection{' '}
             <Link href="/collections/create" passHref>
-              <Anchor size={"sm"}>
-                here
-              </Anchor>
-            </Link>.
+              <Anchor size={'sm'}>here</Anchor>
+            </Link>
+            .
           </Text>
         </Timeline.Item>
 
@@ -22,7 +21,8 @@ export default function HelpPage() {
             An action consists of a label, a topic (advanced mode) and a message.
           </Text>
           <Text color="dimmed" size="sm">
-            The label is the text that shows on the button and the message is the name of the script.
+            The label is the text that shows on the button and the message is the name of the
+            script.
           </Text>
         </Timeline.Item>
 

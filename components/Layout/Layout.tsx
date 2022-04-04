@@ -34,10 +34,26 @@ export default function Layout(props: { children: React.ReactNode }) {
       navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Group grow direction="column">
-            <Button onClick={() => {Router.push("/collections"); setOpened(false)}} size="md" variant="default" leftIcon={<Stack2 size={18} />}>
+            <Button
+              onClick={() => {
+                Router.push('/collections');
+                setOpened(false);
+              }}
+              size="md"
+              variant="default"
+              leftIcon={<Stack2 size={18} />}
+            >
               Collections
             </Button>
-            <Button onClick={() => {Router.push("/help"); setOpened(false)}} size="md" variant="default" leftIcon={<QuestionMark size={18} />}>
+            <Button
+              onClick={() => {
+                Router.push('/help');
+                setOpened(false);
+              }}
+              size="md"
+              variant="default"
+              leftIcon={<QuestionMark size={18} />}
+            >
               Help
             </Button>
             <Button size="md" variant="default" disabled leftIcon={<QuestionMark size={18} />}>

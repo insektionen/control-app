@@ -27,7 +27,7 @@ async function handleDelete(id: string) {
       })
     )
     .catch((err) => {
-      console.error(err)
+      console.error(err);
       showNotification({
         title: 'Error',
         message: 'Something went wrong.',
@@ -40,12 +40,16 @@ async function handleDelete(id: string) {
 export default function Collections(props: Props) {
   return (
     <>
-      <Group position='apart'>
-        <Title order={1} mb={"lg"}>
+      <Group position="apart">
+        <Title order={1} mb={'lg'}>
           Collections
         </Title>
-        <ActionIcon onClick={() => Router.push('/collections/create')} color="green" variant='filled'>
-          <Plus size={18}/>
+        <ActionIcon
+          onClick={() => Router.push('/collections/create')}
+          color="green"
+          variant="filled"
+        >
+          <Plus size={18} />
         </ActionIcon>
       </Group>
       <Group grow direction="column">
