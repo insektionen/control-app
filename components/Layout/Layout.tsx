@@ -12,10 +12,13 @@ import {
   Center,
   Group,
   Container,
+  Button,
 } from '@mantine/core';
 import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
+import { QuestionMark, Stack2 } from 'tabler-icons-react';
+import Router from 'next/router';
 
-export default function Layout(props: {children: React.ReactNode}) {
+export default function Layout(props: { children: React.ReactNode }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
@@ -28,16 +31,24 @@ export default function Layout(props: {children: React.ReactNode}) {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       fixed
-/*       navbar={
+      navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-          <Text>Application navbar</Text>
+          <Group grow direction="column">
+            <Button onClick={() => {Router.push("/collections"); setOpened(false)}} size="md" variant="default" leftIcon={<Stack2 size={18} />}>
+              Collections
+            </Button>
+            <Button onClick={() => {Router.push("/help"); setOpened(false)}} size="md" variant="default" leftIcon={<QuestionMark size={18} />}>
+              Help
+            </Button>
+            <Button size="md" variant="default" disabled leftIcon={<QuestionMark size={18} />}>
+              Coming soon...
+            </Button>
+          </Group>
         </Navbar>
-      } */
+      }
       footer={
         <Footer height={60} p="md">
-          <Center>
-              Built with 🍺 by SMN
-          </Center>
+          <Center>Built with 🍺 by SMN</Center>
         </Footer>
       }
       header={
@@ -52,16 +63,16 @@ export default function Layout(props: {children: React.ReactNode}) {
                 mr="xl"
               />
             </MediaQuery>
-            <Text variant="gradient" weight="bold">crAp</Text>
-            <div style={{flexGrow: 1}}></div>
+            <Text variant="gradient" weight="bold">
+              crApp
+            </Text>
+            <div style={{ flexGrow: 1 }}></div>
             <ColorSchemeToggle />
           </div>
         </Header>
       }
     >
-        <Container>
-            {props.children}
-        </Container>
+      <Container>{props.children}</Container>
     </AppShell>
   );
 }

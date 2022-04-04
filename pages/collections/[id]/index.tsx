@@ -1,9 +1,9 @@
 import { Button, Card, Group } from '@mantine/core';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Pile } from '../../types/types';
-import getClient from '../../util/client';
-import { getPiles } from '../api';
-import { getPile } from '../api/[id]';
+import { Pile } from '../../../types/types';
+import getClient from '../../../util/client';
+import { getPiles } from '../../api';
+import { getPile } from '../../api/[id]';
 
 interface Props {
   pile: Pile;

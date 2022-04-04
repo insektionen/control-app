@@ -13,12 +13,19 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { Plus, Trash, DeviceFloppy, Check, X } from 'tabler-icons-react';
-import { Action, Pile } from '../../types/types';
+import { Action, Pile } from '../../../types/types';
 
 import { showNotification } from '@mantine/notifications';
 import Router from 'next/router';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { getPiles } from '../../api';
+import { getPile } from '../../api/[id]';
 
-export default function Create() {
+interface Props {
+  pile: Pile;
+}
+
+export default function EditPile({ pile }: Props) {
   const exampleAction: Action = {
     title: 'Scen på',
     topic: 'light_mixer/code/run',
@@ -26,8 +33,8 @@ export default function Create() {
   };
 
   const [advanced, setAdvanced] = useState<boolean>(false);
-  const [name, setName] = useState<string>('');
-  const [actions, setActions] = useState<Action[]>([exampleAction]);
+  const [name, setName] = useState<string>(pile.name);
+  const [actions, setActions] = useState<Action[]>(pile.actions);
 
   function createAction() {
     setActions([
@@ -58,10 +65,10 @@ export default function Create() {
     setActions(newActions);
   }
 
-  async function createPile() {
+  async function updatePile(id: string) {
     await axios
-      .post(
-        'http://localhost:3000/api',
+      .put(
+        `http://localhost:3000/api/${id}`,
         {
           name: name,
           actions: actions,
@@ -75,7 +82,7 @@ export default function Create() {
       .then((res) => {
         showNotification({
           title: 'Success',
-          message: `Created collection \'${res.data.name}\'! Reload for changes to show.`,
+          message: `Updated collection \'${res.data.name}\'! Reload for changes to show.`,
           icon: <Check size={18} />,
           color: 'green',
         });
@@ -95,7 +102,7 @@ export default function Create() {
   return (
     <Container size="sm">
       <Title order={1} mb={25}>
-        Create new collection
+        Editing {pile.name}
       </Title>
       <TextInput
         label="Collection name"
@@ -151,10 +158,29 @@ export default function Create() {
         color="green"
         variant="filled"
         leftIcon={<DeviceFloppy />}
-        onClick={() => createPile()}
+        onClick={() => updatePile(pile._id)}
       >
         Save
       </Button>
     </Container>
   );
 }
+
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
+  const data = await getPile(context.params?.id?.toString()!);
+  return {
+    props: {
+      pile: data!,
+    },
+    revalidate: 10,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getPiles();
+  const paths = data.map((pile) => ({ params: { id: pile._id.toString() } }));
+  return {
+    paths: paths,
+    fallback: 'blocking', // false or 'blocking',
+  };
+};

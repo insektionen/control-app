@@ -4,13 +4,14 @@ import { BuildPile, Pile } from '../../types/types';
 import { connectToCollection } from '../../util/db';
 const { customAlphabet } = require('nanoid');
 const alphabet =
-	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?_';
+	'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
 const nanoid = customAlphabet(alphabet, 10);
 
 function isValidPile(body: any): body is BuildPile {
 	return (
 		typeof body === 'object' &&
 		typeof (body as BuildPile).name === 'string' &&
+		(body as BuildPile).name.length > 1 &&
 		Array.isArray((body as BuildPile).actions) &&
 		!(body as BuildPile).actions.some(
 			(a) =>
@@ -37,6 +38,7 @@ export default async function handler(
 		case 'POST': {
 			if (!isValidPile(body)) {
 				res.status(400).send('Body data is INcomplete');
+				break;
 			}
 			const { collection } = await connectToCollection();
 			const id = nanoid();
