@@ -17,6 +17,8 @@ import {
 import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 import { QuestionMark, Stack2 } from 'tabler-icons-react';
 import Router from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Layout(props: { children: React.ReactNode }) {
   const theme = useMantineTheme();
@@ -79,9 +81,14 @@ export default function Layout(props: { children: React.ReactNode }) {
                 mr="xl"
               />
             </MediaQuery>
-            <Text variant="gradient" weight="bold">
-              crApp
-            </Text>
+            <Link href="/">
+                <Group sx={{cursor: "pointer"}}>
+                    <Image src={'/in_logo.png'} height={30} width={30} />
+                    <Text size="xl" weight="bold">
+                    crApp
+                    </Text>
+                </Group>
+            </Link>
             <div style={{ flexGrow: 1 }}></div>
             <ColorSchemeToggle />
           </div>

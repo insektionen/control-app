@@ -1,5 +1,7 @@
-import { Button, Card, Group } from '@mantine/core';
+import { Button, Card, Group, SimpleGrid } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { ActionButton } from '../../../components/ActionButton/ActionButton';
 import { Pile } from '../../../types/types';
 import getClient from '../../../util/client';
 import { getPiles } from '../../api';
@@ -11,16 +13,15 @@ interface Props {
 
 export default function Collection({ pile }: Props) {
   const mqtt = getClient();
+  const mobile = useMediaQuery('(max-width: 768px)')
 
   return (
     <>
-      <Group>
+      <SimpleGrid cols={mobile ? 1 : 3}>
         {pile.actions.map((action, index) => (
-          <Button onClick={() => mqtt.publish(action.topic, `${action.msg}:start()`)} key={index}>
-            {action.title}
-          </Button>
+          <ActionButton action={action} key={index} />
         ))}
-      </Group>
+      </SimpleGrid>
     </>
   );
 }
