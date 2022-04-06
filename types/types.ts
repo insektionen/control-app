@@ -8,7 +8,7 @@ export interface CollectionConnection {
 export type Action = {
   title: string;
   topic: string;
-  msg: string;
+  msg: string | string[];
 };
 
 export type Pile = {

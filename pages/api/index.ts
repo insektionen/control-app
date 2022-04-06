@@ -12,9 +12,9 @@ function isValidPile(body: any): body is BuildPile {
     typeof (body as BuildPile).name === 'string' &&
     (body as BuildPile).name.length > 1 &&
     Array.isArray((body as BuildPile).actions) &&
-    !(body as BuildPile).actions.some(
-      (a) => typeof a.msg !== 'string' || typeof a.title !== 'string' || typeof a.topic !== 'string'
-    )
+    !(body as BuildPile).actions.some((a) => {
+      typeof a.msg !== 'string' || typeof a.title !== 'string' || typeof a.topic !== 'string';
+    })
   );
 }
 

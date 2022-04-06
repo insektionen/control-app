@@ -49,7 +49,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             },
           }
         )
-        .then((res) => console.log(res));
       const pile: Pile = {
         _id: query.id.toString(),
         name: body.name,
