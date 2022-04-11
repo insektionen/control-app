@@ -10,7 +10,7 @@ export function Welcome() {
       <Title className={classes.title} align="center" mt={100}>
         Welcome to{' '}
         <Text inherit variant="gradient" component="span">
-          crApp
+          crAp
         </Text>
       </Title>
       <Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">
@@ -19,7 +19,7 @@ export function Welcome() {
       </Text>
       <Text color="dimmed" align="center" size="lg" sx={{ maxWidth: 580 }} mx="auto" mt="xl">
         New here?{' '}
-        <Link href="/help">
+        <Link href="/help" passHref>
           <Anchor href="/help" size="lg">
             get started
           </Anchor>

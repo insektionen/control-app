@@ -1,4 +1,4 @@
-# crapp
+# CrAp
 
 Control Application for the lights and sound system in Kistan 2.0
 

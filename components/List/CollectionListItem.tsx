@@ -11,7 +11,7 @@ interface Props {
 export default function CollectionListItem({ label, onClick, color, menu }: Props) {
   return (
     <Card>
-      <Group noWrap spacing={'lg'}>
+      <Group noWrap spacing="lg">
         <Button
           variant="default"
           fullWidth

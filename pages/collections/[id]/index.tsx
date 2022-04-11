@@ -1,4 +1,4 @@
-import { Button, Card, Group, SimpleGrid } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ActionButton } from '../../../components/ActionButton/ActionButton';
@@ -13,7 +13,7 @@ interface Props {
 
 export default function Collection({ pile }: Props) {
   const mqtt = getClient();
-  const mobile = useMediaQuery('(max-width: 768px)')
+  const mobile = useMediaQuery('(max-width: 768px)');
 
   return (
     <>
@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       pile: data!,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };
 

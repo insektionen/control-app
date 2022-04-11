@@ -14,11 +14,11 @@ import {
   Container,
   Button,
 } from '@mantine/core';
-import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
-import { QuestionMark, Stack2 } from 'tabler-icons-react';
+import { Code, QuestionMark, Stack2 } from 'tabler-icons-react';
 import Router from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ColorSchemeToggle } from '../ColorSchemeToggle/ColorSchemeToggle';
 
 export default function Layout(props: { children: React.ReactNode }) {
   const theme = useMantineTheme();
@@ -81,13 +81,13 @@ export default function Layout(props: { children: React.ReactNode }) {
                 mr="xl"
               />
             </MediaQuery>
-            <Link href="/">
-                <Group sx={{cursor: "pointer"}}>
-                    <Image src={'/in_logo.png'} height={30} width={30} />
-                    <Text size="xl" weight="bold">
-                    crApp
-                    </Text>
-                </Group>
+            <Link href="/" passHref>
+              <Group sx={{ cursor: 'pointer' }}>
+                <Image src="/in_logo.png" height={30} width={30} />
+                <Text size="xl" weight="bold">
+                  crAp
+                </Text>
+              </Group>
             </Link>
             <div style={{ flexGrow: 1 }}></div>
             <ColorSchemeToggle />

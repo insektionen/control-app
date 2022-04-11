@@ -1,11 +1,11 @@
-import { Button, Box, Group, Menu, Title, ActionIcon } from '@mantine/core';
+const { NEXT_PUBLIC_API_URL } = process.env;
+
+import { Group, Menu, Title, ActionIcon } from '@mantine/core';
 import axios from 'axios';
 import { GetStaticProps } from 'next';
-import Link from 'next/link';
 import Router from 'next/router';
 import { Check, Pencil, Plus, Trash, X } from 'tabler-icons-react';
 import CollectionListItem from '../../components/List/CollectionListItem';
-import { SplitButton } from '../../components/SplitButton';
 import { Pile } from '../../types/types';
 import { getPiles } from '../api';
 
@@ -17,7 +17,7 @@ interface Props {
 
 async function handleDelete(id: string) {
   await axios
-    .delete(`http://localhost:3000/api/${id}`)
+    .delete(`${NEXT_PUBLIC_API_URL}/${id}`)
     .then((res) =>
       showNotification({
         title: 'Success',
@@ -41,7 +41,7 @@ export default function Collections(props: Props) {
   return (
     <>
       <Group position="apart">
-        <Title order={1} mb={'lg'}>
+        <Title order={1} mb="lg">
           Collections
         </Title>
         <ActionIcon
@@ -87,6 +87,6 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       piles: data!,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };

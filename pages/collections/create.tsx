@@ -1,3 +1,6 @@
+
+const { NEXT_PUBLIC_API_URL } = process.env
+
 import {
   TextInput,
   Divider,
@@ -12,8 +15,8 @@ import {
 } from '@mantine/core';
 import axios from 'axios';
 import { useState } from 'react';
-import { Plus, Trash, DeviceFloppy, Check, X } from 'tabler-icons-react';
-import { Action, Pile } from '../../types/types';
+import { Plus, Trash, Check, X } from 'tabler-icons-react';
+import { Action } from '../../types/types';
 
 import { showNotification } from '@mantine/notifications';
 import Router from 'next/router';
@@ -46,7 +49,7 @@ export default function Create() {
       newActions.shift();
       setActions(newActions);
     } else {
-      newActions.splice(index);
+      newActions.splice(index, 1);
       setActions(newActions);
     }
   }
@@ -61,7 +64,7 @@ export default function Create() {
   async function createPile() {
     await axios
       .post(
-        'http://localhost:3000/api',
+        `${NEXT_PUBLIC_API_URL}`,
         {
           name: name,
           actions: actions,
@@ -94,67 +97,67 @@ export default function Create() {
 
   return (
     <Container size="sm">
-      <Title order={1} mb={25}>
-        Create new collection
+    <Title order={1} mb={25}>
+      Create new
+    </Title>
+    <TextInput
+      label="Collection name"
+      placeholder="Gasque"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+    <Group mt="lg" spacing="xs" align="center" position="right">
+      <Text size="sm" color="dimmed">
+        Advanced mode
+      </Text>
+      <Checkbox checked={advanced} onClick={() => setAdvanced(!advanced)} size="xs" />
+    </Group>
+    <Divider my="lg" />
+    <Group mb="lg" position="apart">
+      <Title order={2} sx={{ fontSize: 18 }}>
+        Actions
       </Title>
-      <TextInput
-        label="Collection name"
-        placeholder="Gasque"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Group mt={'lg'} spacing="xs" align={'center'} position="right">
-        <Text size="sm" color="dimmed">
-          Advanced mode
-        </Text>
-        <Checkbox checked={advanced} onClick={() => setAdvanced(!advanced)} size="xs" />
-      </Group>
-      <Divider my={'lg'} />
-      <Group mb={'lg'} position="apart">
-        <Title order={2} sx={{ fontSize: 18 }}>
-          Actions
-        </Title>
-        <ActionIcon onClick={() => createAction()} variant="filled" color="green">
-          <Plus size={18} />
-        </ActionIcon>
-      </Group>
-      <Group grow direction="column">
-        {actions.map((action, i) => (
-          <Card withBorder shadow={'sm'} key={i} mb={'lg'}>
-            <Group position="right">
-              <ActionIcon onClick={() => deleteAction(i)} color="red" variant="filled">
-                <Trash size={18} />
-              </ActionIcon>
-            </Group>
+      <ActionIcon onClick={() => createAction()} variant="filled" color="green">
+        <Plus size={18} />
+      </ActionIcon>
+    </Group>
+    <Group grow direction="column">
+      {actions.map((action, i) => (
+        <Card withBorder shadow="sm" key={i} mb="lg">
+          <Group position="right">
+            <ActionIcon onClick={() => deleteAction(i)} color="red" variant="filled">
+              <Trash size={18} />
+            </ActionIcon>
+          </Group>
+          <TextInput
+            label="Label"
+            onChange={(e) => updateAction(e.target.value, i, 'title')}
+            value={action.title}
+          />
+          {advanced && (
             <TextInput
-              label="Label"
-              onChange={(e) => updateAction(e.target.value, i, 'title')}
-              value={action.title}
+              label="Topic"
+              onChange={(e) => updateAction(e.target.value, i, 'topic')}
+              value={action.topic}
             />
-            {advanced && (
-              <TextInput
-                label="Topic"
-                onChange={(e) => updateAction(e.target.value, i, 'topic')}
-                value={action.topic}
-              />
-            )}
-            <TextInput
-              label={advanced ? 'Message' : 'Script name'}
-              onChange={(e) => updateAction(e.target.value, i, 'msg')}
-              value={action.msg}
-            />
-          </Card>
-        ))}
-      </Group>
-      <Button
-        fullWidth
-        color="green"
-        variant="filled"
-        leftIcon={<DeviceFloppy />}
-        onClick={() => createPile()}
-      >
-        Save
-      </Button>
-    </Container>
+          )}
+          <TextInput
+            label={advanced ? 'Message' : 'Script name'}
+            onChange={(e) => updateAction(e.target.value, i, 'msg')}
+            value={action.msg}
+          />
+        </Card>
+      ))}
+    </Group>
+    <Button
+      fullWidth
+      color="green"
+      variant="filled"
+      leftIcon={<Plus />}
+      onClick={() => createPile()}
+    >
+      Create
+    </Button>
+  </Container>
   );
 }

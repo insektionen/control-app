@@ -39,16 +39,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         break;
       }
       const { collection } = await connectToCollection();
-      collection
-        .findOneAndUpdate(
-          { _id: query.id },
-          {
-            $set: {
-              name: body.name,
-              actions: body.actions,
-            },
-          }
-        )
+      collection.findOneAndUpdate(
+        { _id: query.id },
+        {
+          $set: {
+            name: body.name,
+            actions: body.actions,
+          },
+        }
+      );
       const pile: Pile = {
         _id: query.id.toString(),
         name: body.name,

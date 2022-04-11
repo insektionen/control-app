@@ -1,3 +1,5 @@
+const { NEXT_PUBLIC_API_URL } = process.env
+
 import {
   TextInput,
   Divider,
@@ -49,11 +51,11 @@ export default function EditPile({ pile }: Props) {
 
   function deleteAction(index: number) {
     let newActions = [...actions];
-    if (index == 0) {
+    if (index === 0) {
       newActions.shift();
       setActions(newActions);
     } else {
-      newActions.splice(index);
+      newActions.splice(index, 1);
       setActions(newActions);
     }
   }
@@ -68,7 +70,7 @@ export default function EditPile({ pile }: Props) {
   async function updatePile(id: string) {
     await axios
       .put(
-        `http://localhost:3000/api/${id}`,
+        `${NEXT_PUBLIC_API_URL}/${id}`,
         {
           name: name,
           actions: actions,
@@ -110,14 +112,14 @@ export default function EditPile({ pile }: Props) {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <Group mt={'lg'} spacing="xs" align={'center'} position="right">
+      <Group mt="lg" spacing="xs" align="center" position="right">
         <Text size="sm" color="dimmed">
           Advanced mode
         </Text>
         <Checkbox checked={advanced} onClick={() => setAdvanced(!advanced)} size="xs" />
       </Group>
-      <Divider my={'lg'} />
-      <Group mb={'lg'} position="apart">
+      <Divider my="lg" />
+      <Group mb="lg" position="apart">
         <Title order={2} sx={{ fontSize: 18 }}>
           Actions
         </Title>
@@ -127,7 +129,7 @@ export default function EditPile({ pile }: Props) {
       </Group>
       <Group grow direction="column">
         {actions.map((action, i) => (
-          <Card withBorder shadow={'sm'} key={i} mb={'lg'}>
+          <Card withBorder shadow="sm" key={i} mb="lg">
             <Group position="right">
               <ActionIcon onClick={() => deleteAction(i)} color="red" variant="filled">
                 <Trash size={18} />
@@ -172,7 +174,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     props: {
       pile: data!,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };
 
