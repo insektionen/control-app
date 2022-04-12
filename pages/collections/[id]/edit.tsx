@@ -1,5 +1,3 @@
-const { NEXT_PUBLIC_API_URL } = process.env
-
 import {
   TextInput,
   Divider,
@@ -15,14 +13,15 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { Plus, Trash, DeviceFloppy, Check, X } from 'tabler-icons-react';
-import { Action, Pile } from '../../../types/types';
-
+import getConfig from 'next/config';
 import { showNotification } from '@mantine/notifications';
 import Router from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { Action, Pile } from '../../../types/types';
 import { getPiles } from '../../api';
 import { getPile } from '../../api/[id]';
 
+const { publicRuntimeConfig } = getConfig();
 interface Props {
   pile: Pile;
 }
@@ -50,7 +49,7 @@ export default function EditPile({ pile }: Props) {
   }
 
   function deleteAction(index: number) {
-    let newActions = [...actions];
+    const newActions = [...actions];
     if (index === 0) {
       newActions.shift();
       setActions(newActions);
@@ -61,7 +60,7 @@ export default function EditPile({ pile }: Props) {
   }
 
   function updateAction(value: string, index: number, field: 'title' | 'msg' | 'topic') {
-    let newActions = [...actions]; // copying the old datas array
+    const newActions = [...actions]; // copying the old datas array
     newActions[index][field] = value; // replace e.target.value with whatever you want to change it to
 
     setActions(newActions);
@@ -70,10 +69,10 @@ export default function EditPile({ pile }: Props) {
   async function updatePile(id: string) {
     await axios
       .put(
-        `${NEXT_PUBLIC_API_URL}/${id}`,
+        `${publicRuntimeConfig.apiURL}/${id}`,
         {
-          name: name,
-          actions: actions,
+          name,
+          actions,
         },
         {
           headers: {
@@ -182,7 +181,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const data = await getPiles();
   const paths = data.map((pile) => ({ params: { id: pile._id.toString() } }));
   return {
-    paths: paths,
+    paths,
     fallback: 'blocking', // false or 'blocking',
   };
 };
