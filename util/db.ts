@@ -7,8 +7,8 @@ const URL = `mongodb+srv://${serverRuntimeConfig.db.username}:${serverRuntimeCon
 
 // @ts-ignore
 let cached = global.mongodb; // Handle cached connection
-// @ts-ignore
 if (!cached) {
+    // @ts-ignore
     cached = global.mongodb = {
         conn: null,
         promise: null
