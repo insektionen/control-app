@@ -1,5 +1,3 @@
-const { NEXT_PUBLIC_API_URL } = process.env;
-
 import { Group, Menu, Title, ActionIcon } from '@mantine/core';
 import axios from 'axios';
 import { GetStaticProps } from 'next';
@@ -8,16 +6,17 @@ import { Check, Pencil, Plus, Trash, X } from 'tabler-icons-react';
 import CollectionListItem from '../../components/List/CollectionListItem';
 import { Pile } from '../../types/types';
 import { getPiles } from '../api';
-
 import { showNotification } from '@mantine/notifications';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
 interface Props {
   piles: Pile[];
 }
 
 async function handleDelete(id: string) {
   await axios
-    .delete(`${NEXT_PUBLIC_API_URL}/${id}`)
+    .delete(`${publicRuntimeConfig.apiURL}/${id}`)
     .then((res) =>
       showNotification({
         title: 'Success',

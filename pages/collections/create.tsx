@@ -1,6 +1,3 @@
-
-const { NEXT_PUBLIC_API_URL } = process.env
-
 import {
   TextInput,
   Divider,
@@ -16,11 +13,12 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { Plus, Trash, Check, X } from 'tabler-icons-react';
-import { Action } from '../../types/types';
-
 import { showNotification } from '@mantine/notifications';
 import Router from 'next/router';
+import { Action } from '../../types/types';
+import getConfig from 'next/config';
 
+const { publicRuntimeConfig } = getConfig();
 export default function Create() {
   const exampleAction: Action = {
     title: 'Scen på',
@@ -64,7 +62,7 @@ export default function Create() {
   async function createPile() {
     await axios
       .post(
-        `${NEXT_PUBLIC_API_URL}`,
+        `${publicRuntimeConfig.apiURL}`,
         {
           name: name,
           actions: actions,
