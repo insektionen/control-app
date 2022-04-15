@@ -21,7 +21,7 @@ import { Action, Pile } from '../../../types/types';
 import { getPiles } from '../../api';
 import { getPile } from '../../api/[id]';
 
-const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_API_URL } = process.env
 interface Props {
   pile: Pile;
 }
@@ -69,7 +69,7 @@ export default function EditPile({ pile }: Props) {
   async function updatePile(id: string) {
     await axios
       .put(
-        `${publicRuntimeConfig.apiURL}/${id}`,
+        `${NEXT_PUBLIC_API_URL}/${id}`,
         {
           name,
           actions,

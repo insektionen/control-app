@@ -2,8 +2,9 @@ import {MongoClient} from 'mongodb';
 import getConfig from 'next/config';
 import {CollectionConnection} from '../types/types';
 
-const {serverRuntimeConfig} = getConfig();
-const URL = `mongodb+srv://${serverRuntimeConfig.db.username}:${serverRuntimeConfig.db.password}@${serverRuntimeConfig.db.cluster}/${serverRuntimeConfig.db.database}?retryWrites=true&w=majority`;
+const { DB_USERNAME, DB_PASSWORD, DB_CLUSTER, DB_DATABASE } = process.env
+
+const URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_DATABASE}?retryWrites=true&w=majority`;
 
 // @ts-ignore
 let cached = global.mongodb; // Handle cached connection
@@ -25,7 +26,7 @@ export async function connectToCollection(): Promise<CollectionConnection> {
         cached.promise = MongoClient.connect(URL)
             .then((client) => ({
                 client,
-                collection: client.db(serverRuntimeConfig.db.database)
+                collection: client.db(DB_DATABASE)
                     .collection(collection),
             }));
     }

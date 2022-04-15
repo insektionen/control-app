@@ -18,7 +18,8 @@ import Router from 'next/router';
 import { Action } from '../../types/types';
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig } = getConfig();
+const { NEXT_PUBLIC_API_URL } = process.env;
+
 export default function Create() {
   const exampleAction: Action = {
     title: 'Scen på',
@@ -62,7 +63,7 @@ export default function Create() {
   async function createPile() {
     await axios
       .post(
-        `${publicRuntimeConfig.apiURL}`,
+        `${NEXT_PUBLIC_API_URL}`,
         {
           name: name,
           actions: actions,
