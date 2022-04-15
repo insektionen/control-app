@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 import {CollectionConnection} from '../types/types';
 
 const {serverRuntimeConfig} = getConfig();
-const URL = `mongodb+srv://${serverRuntimeConfig.db.username}:${serverRuntimeConfig.db.password}@${serverRuntimeConfig.db.cluster}/${serverRuntimeConfig.db.database}?retryWrites=true&w=majority`;
+const URL = `mongodb+srv://${serverRuntimeConfig.db.username || ""}:${serverRuntimeConfig.db.password || ""}@${serverRuntimeConfig.db.cluster || ""}/${serverRuntimeConfig.db.database || ""}?retryWrites=true&w=majority`;
 
 // @ts-ignore
 let cached = global.mongodb; // Handle cached connection
