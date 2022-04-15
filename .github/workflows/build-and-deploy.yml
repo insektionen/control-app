@@ -1,8 +1,18 @@
 name: Build & Deploy
+
 on:
   push:
     branches:
     - master
+
+env:
+  DB_USERNAME: ${{secrets.DB_USERNAME}}
+  DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+  DB_CLUSTER: ${{secrets.DB_CLUSTER}}
+  DB_DATABASE: ${{secrets.DB_DATABASE}}
+  MQTT_URL: ${{secrets.MQTT_URL}}
+  NEXT_PUBLIC_API_URL: ${{secrets.NEXT_PUBLIC_API_URL}}
+  
 jobs:
   docker:
     runs-on: ubuntu-latest
