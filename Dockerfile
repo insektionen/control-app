@@ -15,6 +15,12 @@ ENV DB_CLUSTER=${ARG_CLUSTER}
 ENV DB_DATABASE=${ARG_DATABASE}
 ENV NEXT_PUBLIC_API_URL=${ARG_API_URL}
 
+RUN echo "$DB_USERNAME"
+RUN echo "$DB_PASSWORD"
+RUN echo "$DB_CLUSTER"
+RUN echo "$DB_DATABASE"
+RUN echo "$NEXT_PUBLIC_API_URL"
+
 COPY . ./
 RUN yarn install --pure-lockfile && yarn build
 
