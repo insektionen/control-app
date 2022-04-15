@@ -13,6 +13,12 @@ jobs:
       with:
         load: true
         tags: insektionen/control-app:latest
+        build-args: |
+          ARG_USERNAME = ${{ secrets.ARG_USERNAME }}
+          ARG_PASSWORD = ${{ secrets.ARG_PASSWORD }}
+          ARG_CLUSTER = ${{ secrets.ARG_CLUSTER }}
+          ARG_DATABASE = ${{ secrets.ARG_DATABASE }}
+          ARG_MQTT_URL = ${{ secrets.MQTT_URL }}
     - name: Export container
       run: docker save insektionen/control-app:latest | gzip > control-app_latest.tar.gz
     - name: Copy to Server
