@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, MantineGradient } from '@mantine/core';
 import { Action } from '../../types/types';
 import getClient from '../../util/client';
 
@@ -19,9 +19,19 @@ export function ActionButton({ action }: Props) {
     }
   }
 
+  let gradient: MantineGradient = {
+    from: action.color || '', 
+    // TODO make it gradient
+    to:   action.color || '' 
+  };
+
   return (
     <>
-      <Button variant="gradient" size="xl" onClick={() => publish()}>
+      <Button 
+        variant="gradient" 
+        gradient={gradient}
+        size="xl" onClick={publish}
+      >
         {action.title}
       </Button>
     </>

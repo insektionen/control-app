@@ -9,6 +9,7 @@ export type Action = {
   title: string;
   topic: string;
   msg: string | string[];
+  color?: string;
 };
 
 export type Pile = {

@@ -1,10 +1,11 @@
 import {MongoClient} from 'mongodb';
-import getConfig from 'next/config';
 import {CollectionConnection} from '../types/types';
 
-const { DB_USERNAME, DB_PASSWORD, DB_CLUSTER, DB_DATABASE } = process.env
+const { NODE_ENV, DB_USERNAME, DB_PASSWORD, DB_CLUSTER, DB_DATABASE, DB_OPTIONS } = process.env
 
-const URL = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_DATABASE}?retryWrites=true&w=majority`;
+const URL = NODE_ENV == 'development' ? 
+        `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_DATABASE}?retryWrites=true&w=majority&${DB_OPTIONS}` :
+        `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_DATABASE}?retryWrites=true&w=majority`;
 
 // @ts-ignore
 let cached = global.mongodb; // Handle cached connection

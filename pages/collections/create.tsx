@@ -9,6 +9,8 @@ import {
   Button,
   Container,
   Checkbox,
+  ColorInput,
+  DEFAULT_THEME,
 } from '@mantine/core';
 import axios from 'axios';
 import { useState } from 'react';
@@ -16,7 +18,6 @@ import { Plus, Trash, Check, X } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import Router from 'next/router';
 import { Action } from '../../types/types';
-import getConfig from 'next/config';
 
 const { NEXT_PUBLIC_API_URL } = process.env;
 
@@ -53,7 +54,7 @@ export default function Create() {
     }
   }
 
-  function updateAction(value: string, index: number, field: 'title' | 'msg' | 'topic') {
+  function updateAction(value: string, index: number, field: 'title' | 'msg' | 'topic' | 'color') {
     let newActions = [...actions]; // copying the old datas array
     newActions[index][field] = value; // replace e.target.value with whatever you want to change it to
 
@@ -63,7 +64,8 @@ export default function Create() {
   async function createPile() {
     await axios
       .post(
-        `${NEXT_PUBLIC_API_URL}`,
+        // TODO
+        `${location.origin + '/api'}`,
         {
           name: name,
           actions: actions,
@@ -145,6 +147,14 @@ export default function Create() {
             onChange={(e) => updateAction(e.target.value, i, 'msg')}
             value={action.msg}
           />
+          <ColorInput
+            placeholder="Pick color"
+            label="Script Color"
+            disallowInput
+            withPicker={false}
+            swatches={Object.entries(DEFAULT_THEME.colors).flatMap((key) => key[1])}
+            onChange={(color) => updateAction(color, i, 'color')}
+          />
         </Card>
       ))}
     </Group>
@@ -153,7 +163,7 @@ export default function Create() {
       color="green"
       variant="filled"
       leftIcon={<Plus />}
-      onClick={() => createPile()}
+      onClick={createPile}
     >
       Create
     </Button>
