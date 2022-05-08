@@ -1,29 +1,49 @@
-import {
-  TextInput,
-  Divider,
-  Group,
-  Title,
-  Text,
-  ActionIcon,
-  Card,
-  Button,
-  Container,
-  Checkbox,
-} from '@mantine/core';
-import axios from 'axios';
-import { useState } from 'react';
-import { Plus, Trash, DeviceFloppy, Check, X } from 'tabler-icons-react';
-import getConfig from 'next/config';
-import { showNotification } from '@mantine/notifications';
-import Router from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { Action, Pile } from '../../../types/types';
 import { getPiles } from '../../api';
 import { getPile } from '../../api/[id]';
 import EditPile from '../../../components/EditPile/EditPile';
+import axios from 'axios';
+import { showNotification } from '@mantine/notifications';
+import Router from 'next/router';
+import { Check, X } from 'tabler-icons-react';
 
 interface Props {
   pile: Pile;
+}
+
+async function updatePile(name: string, actions: Action[], id: string) {
+  await axios
+    .put(
+      location.origin + `/${id}`,
+      {
+        name,
+        actions,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    .then((res) => {
+      showNotification({
+        title: 'Success',
+        message: `Updated collection \'${res.data.name}\'! Reload for changes to show.`,
+        icon: <Check size={18} />,
+        color: 'green',
+      });
+      Router.push('/collections');
+    })
+    .catch((err) => {
+      showNotification({
+        title: 'Error',
+        message: 'Something went wrong.',
+        icon: <X size={18} />,
+        color: 'red',
+      });
+      console.error(err);
+    });
 }
 
 export default function Edit({ pile }: Props) {
