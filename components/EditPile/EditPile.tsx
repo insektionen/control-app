@@ -1,23 +1,16 @@
 import {
-    TextInput,
-    Divider,
-    Group,
-    Title,
-    Text,
-    ActionIcon,
-    Card,
-    Button,
-    Container,
-    Checkbox,
-    ColorInput,
-    DEFAULT_THEME,
+    ActionIcon, Button, Card, Checkbox,
+    ColorInput, Container, DEFAULT_THEME, Divider,
+    Group, Text, TextInput, Title
 } from '@mantine/core';
-import axios from 'axios';
 import { useState } from 'react';
-import { Plus, Trash, Check, X } from 'tabler-icons-react';
-import { showNotification } from '@mantine/notifications';
-import Router from 'next/router';
+import { Plus, Trash } from 'tabler-icons-react';
 import { Action, Pile } from '../../types/types';
+
+interface Props {
+    pile: Pile;
+    setPileCallback: (name: string, actions: Action[], id: string) => void
+}
 
 function createAction(setActions: Function, actions: Action[]) {
     setActions([
@@ -41,7 +34,7 @@ function deleteAction(setActions: Function, actions: Action[], index: number) {
     }
 }
 
-type DBFields =  'title' | 'msg' | 'topic' | 'color';
+type DBFields = 'title' | 'msg' | 'topic' | 'color';
 
 function updateAction(setActions: Function, actions: Action[], value: string, index: number, field: DBFields) {
     let newActions = [...actions]; // copying the old datas array
@@ -50,47 +43,7 @@ function updateAction(setActions: Function, actions: Action[], value: string, in
     setActions(newActions);
 }
 
-interface Props {
-    pile: Pile;
-}
-
-async function createPile(name: string, actions: Action[]) {
-    await axios
-        .post(
-            // TODO
-            `${location.origin + '/api'}`,
-            {
-                name: name,
-                actions: actions,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
-        .then((res) => {
-            showNotification({
-                title: 'Success',
-                message: `Created collection \'${res.data.name}\'! Reload for changes to show.`,
-                icon: <Check size={18} />,
-                color: 'green',
-            });
-            Router.push('/collections');
-        })
-        .catch((err) => {
-            showNotification({
-                title: 'Error',
-                message: 'Something went wrong.',
-                icon: <X size={18} />,
-                color: 'red',
-            });
-            console.error(err);
-        });
-}
-
-
-export default function EditPile({ pile }: Props) {
+export default function EditPile({ pile, setPileCallback }: Props) {
 
     const [advanced, setAdvanced] = useState<boolean>(false);
     const [name, setName] = useState<string>(pile.name);
@@ -148,6 +101,7 @@ export default function EditPile({ pile }: Props) {
                             value={action.msg}
                         />
                         <ColorInput
+                            value={action.color}
                             placeholder="Pick color"
                             label="Script Color"
                             disallowInput
@@ -163,7 +117,7 @@ export default function EditPile({ pile }: Props) {
                 color="green"
                 variant="filled"
                 leftIcon={<Plus />}
-                onClick={() => createPile(name, actions)}
+                onClick={() => setPileCallback(name, actions, pile._id)}
             >
                 Create
             </Button>

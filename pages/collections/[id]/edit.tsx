@@ -48,7 +48,7 @@ async function updatePile(name: string, actions: Action[], id: string) {
 
 export default function Edit({ pile }: Props) {
   return (
-    <EditPile pile={pile} />
+    <EditPile pile={pile} setPileCallback={updatePile}/>
   ) 
 }
 
