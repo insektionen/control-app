@@ -9,14 +9,13 @@ import { getPiles } from '../api';
 import { showNotification } from '@mantine/notifications';
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig } = getConfig();
 interface Props {
   piles: Pile[];
 }
 
 async function handleDelete(id: string) {
   await axios
-    .delete(`${publicRuntimeConfig.apiURL}/${id}`)
+    .delete(`${location.origin}/api/${id}`)
     .then((res) =>
       showNotification({
         title: 'Success',
