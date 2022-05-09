@@ -10,7 +10,7 @@ const { NEXT_PUBLIC_API_URL } = process.env;
 async function createPile(name: string, actions: Action[]) {
   await axios
     .post(
-      `${NEXT_PUBLIC_API_URL}`,
+      `${location.origin}/api`,
       {
         name: name,
         actions: actions,
@@ -41,7 +41,6 @@ async function createPile(name: string, actions: Action[]) {
     });
 }
 
-
 const exampleAction: Action = {
   title: 'Scen på',
   topic: 'light_mixer/code/run',
@@ -51,12 +50,9 @@ const exampleAction: Action = {
 const newPile: Pile = {
   _id: '',
   name: '',
-  actions: [exampleAction]
-}
+  actions: [exampleAction],
+};
 
 export default function Create() {
-
-  return (
-    <EditPile pile={newPile} setPileCallback={createPile}/>
-  )
+  return <EditPile pile={newPile} setPileCallback={createPile} />;
 }

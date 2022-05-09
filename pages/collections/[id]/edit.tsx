@@ -15,7 +15,7 @@ interface Props {
 async function updatePile(name: string, actions: Action[], id: string) {
   await axios
     .put(
-      location.origin + `/${id}`,
+      location.origin + `/api/${id}`,
       {
         name,
         actions,
@@ -47,9 +47,7 @@ async function updatePile(name: string, actions: Action[], id: string) {
 }
 
 export default function Edit({ pile }: Props) {
-  return (
-    <EditPile pile={pile} setPileCallback={updatePile}/>
-  ) 
+  return <EditPile pile={pile} setPileCallback={updatePile} />;
 }
 
 export const getStaticProps: GetStaticProps<Props> = async (context) => {
