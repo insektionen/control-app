@@ -1,8 +1,6 @@
-import { ActionIcon, Group, Text, Title } from '@mantine/core';
+import { Group, Text, Title } from '@mantine/core';
 import { OnMessageCallback } from 'mqtt';
-import Router from 'next/router';
-import { useEffect, useRef, useState } from 'react';
-import { Plus } from 'tabler-icons-react';
+import { useEffect, useState } from 'react';
 import getClient from '../../util/client';
 
 interface Props {
@@ -67,3 +65,13 @@ export default function Editor(props: Props) {
     </>
   );
 }
+
+// export const getStaticProps: GetStaticProps<Props> = async (context) => {
+  
+//   return {
+//     props: {
+//       piles: data!,
+//     },
+//     revalidate: 1,
+//   };
+// };
