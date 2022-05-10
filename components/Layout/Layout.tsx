@@ -49,6 +49,17 @@ export default function Layout(props: { children: React.ReactNode }) {
             </Button>
             <Button
               onClick={() => {
+                Router.push('/editor');
+                setOpened(false);
+              }}
+              size="md"
+              variant="default"
+              leftIcon={<Code size={18} />}
+            >
+              Editor
+            </Button>
+            <Button
+              onClick={() => {
                 Router.push('/help');
                 setOpened(false);
               }}
