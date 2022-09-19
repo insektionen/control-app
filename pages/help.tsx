@@ -1,4 +1,5 @@
 import { Text, Title, Code, Divider } from '@mantine/core';
+
 export default function HelpPage() {
   return (
     <>
