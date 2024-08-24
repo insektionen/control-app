@@ -7,6 +7,6 @@ type GlobalThis = {
 
 export default function getClient(): MqttClient {
   if (!(globalThis as GlobalThis).mqttClient)
-    (globalThis as GlobalThis).mqttClient = mqtt.connect('wss://server.insektionen.se/mqtt');
+    (globalThis as GlobalThis).mqttClient = mqtt.connect('wss://lmixer.insektionen.se/mqtt');
   return (globalThis as GlobalThis).mqttClient!;
 }
