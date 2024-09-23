@@ -46,4 +46,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          script: cd control-app && docker compose up -d --pull
+          script: cd control-app && docker compose up -d
