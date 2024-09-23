@@ -39,11 +39,11 @@ jobs:
             "ARG_DATABASE=${{secrets.DB_DATABASE}}"
             "ARG_API_URL=${{secrets.NEXT_PUBLIC_API_URL}}"
             "ARG_MQTT_URL=${{secrets.MQTT_URL}}"
-#    - name: Import and start on Server
-#      uses: appleboy/ssh-action@master
-#      with:
-#        host: ${{ secrets.SSH_HOST }}
-#        username: ${{ secrets.SSH_USERNAME }}
-#        key: ${{ secrets.SSH_KEY }}
-#        port: 22
-#        script: cd control-app && docker compose up -d --pull
+      - name: Import and start on Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: cd control-app && docker compose up -d --pull
